@@ -1,49 +1,40 @@
 from time import sleep
 import board
 from supervisor import runtime
-from neopixel import NeoPixel
 from rainbowio import colorwheel
-from micropython import const  # type: ignore
-from touchio import TouchIn
 
-N_NEOPIXELS = const(4)
-pixels = NeoPixel(board.NEOPIXEL, N_NEOPIXELS, brightness=0.1)
+from trinkey import NeoTrinkey
+from colours import *
 
-LEFT_TOUCH = TouchIn(board.TOUCH2)
-LEFT_SIDE = (0, 1)
-RIGHT_TOUCH = TouchIn(board.TOUCH1)
-RIGHT_SIDE = (2, 3)
 
-INNER_SIDE = (0, 3)
-OUTER_SIDE = (1, 2)
+def start_up(trinkey):
+    for p in trinkey.pixels:
+        p.fill(0x100000)
+        sleep(0.25)
+    for p in reversed(trinkey.pixels):
+        p.clear()
+        sleep(0.25)
 
-def fill(side, colour):
-    for i in side:
-        pixels[i] = colour
 
-fill(OUTER_SIDE, 0x0000FF)
-while True:
-    if LEFT_TOUCH.value:
-        TOP_TOUCH = LEFT_TOUCH
-        TOP_SIDE = LEFT_SIDE
-        BOTTOM_TOUCH = RIGHT_TOUCH
-        BOTTOM_SIDE = RIGHT_SIDE
-        break
-    elif RIGHT_TOUCH.value:
-        TOP_TOUCH = RIGHT_TOUCH
-        TOP_SIDE = RIGHT_SIDE
-        BOTTOM_TOUCH = LEFT_TOUCH
-        BOTTOM_SIDE = LEFT_SIDE
-        break
-pixels.fill(0)
+trinkey = NeoTrinkey(board)
+start_up(trinkey)
+all_on = False
+
+trinkey.pixels.fill(0xFF0000)
 
 while True:
-    if TOP_TOUCH.value and BOTTOM_TOUCH.value:
-        pixels.fill(0)
     if runtime.serial_bytes_available:
         command = input()
         ps, cs = command.split(";")
         pixels_to_set = [int(x) for x in ps.split(",")]
         colour = int(cs, 16)
         for p in pixels_to_set:
-            pixels[p] = colour
+            trinkey.pixels[p] = colour
+
+    pressed = trinkey.pads.get_press(delay=5)
+    if pressed == "TOP":
+        trinkey.pixels.flash(green)
+    elif pressed == "BOTTOM":
+        trinkey.pixels.flash(blue)
+    elif pressed == "BOTH":
+        trinkey.pixels.flash(0xffffff)
