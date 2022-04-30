@@ -31,7 +31,7 @@ while True:
         for p in pixels_to_set:
             trinkey.pixels[p] = colour
 
-    pressed = trinkey.pads.get_press(delay=5)
+    pressed = trinkey.pads.get_press()
     if pressed == "TOP":
         trinkey.pixels.flash(green)
     elif pressed == "BOTTOM":
