@@ -16,18 +16,18 @@ def read_serial_update():
 
 
 class StatusMonitor:
-    def __init__(self, neotrinkey, serial_handler, touch_handler):
+    def __init__(self, neotrinkey, serial_handler=None, touch_handler=None):
         self.trinkey = neotrinkey
         self.serial = serial_handler
         self.touch = touch_handler
 
     def run(self):
         while True:
-            press = self.trinkey.pads.get_press()
-            if press is not None:
-                print("Pressed: %s" % press)
-                self.touch(trinkey=self.trinkey, pad=press)
-            serial_update = read_serial_update()
-            if serial_update:
-                print("Serial: %s" % serial_update)
-                self.serial(trinkey=self.trinkey, update=serial_update)
+            if self.touch is not None:
+                press = self.trinkey.pads.get_press()
+                if press is not None:
+                    self.touch(trinkey=self.trinkey, pad=press)
+            if self.serial is not None:
+                serial_update = read_serial_update()
+                if serial_update:
+                    self.serial(trinkey=self.trinkey, update=serial_update)
