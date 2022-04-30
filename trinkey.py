@@ -28,15 +28,21 @@ class PixelProxy:
 
 
 class NeoTrinkeyPixels:
+    n_pixels = 4
+
+    # Appease Pylance
+    top: PixelProxy
+    bottom: PixelProxy
+
     def __init__(self, board, brightness=0.1) -> None:
-        self._pixels = NeoPixel(board.NEOPIXEL, n=4, brightness=brightness)
+        self._pixels = NeoPixel(board.NEOPIXEL, n=self.n_pixels, brightness=brightness)
         self.left = PixelProxy(self._pixels, 0, 1)
         self.outer = PixelProxy(self._pixels, 1, 2)
         self.right = PixelProxy(self._pixels, 2, 3)
         self.inner = PixelProxy(self._pixels, 0, 3)
         self._individual = [
             PixelProxy(self._pixels, n)
-            for n in range(4)
+            for n in range(self.n_pixels)
         ]
 
     def save(self):
