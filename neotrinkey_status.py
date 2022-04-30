@@ -1,8 +1,8 @@
 from collections import namedtuple
 from supervisor import runtime
-from neotrinkey import NeoTrinkey
 
 SectionUpdate = namedtuple("SectionUpdate", ("name", "value"))
+
 
 def process_command_line(line):
     parts = [section.split("=") for section in line.split(";")]
@@ -16,7 +16,7 @@ def read_serial_update():
 
 
 class StatusMonitor:
-    def __init__(self, neotrinkey: NeoTrinkey, serial_handler, touch_handler) -> None:
+    def __init__(self, neotrinkey, serial_handler, touch_handler):
         self.trinkey = neotrinkey
         self.serial = serial_handler
         self.touch = touch_handler
