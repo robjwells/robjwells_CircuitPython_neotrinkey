@@ -39,13 +39,13 @@ This library depends on:
 * `Adafruit CircuitPython <https://github.com/adafruit/circuitpython>`_
 
 Just install the latest version of CircuitPython onto your board, and then
-include the neotrinkey folder in the `lib` folder on board.
+include the neotrinkey folder in the lib folder on board.
 
 Usage Example
 =============
 
-.. todo:: Add a quick, simple example. It and other examples should live in the
-examples folder and be included in docs/examples.rst.
+.. Add a quick, simple example. It and other examples should live in the
+    examples folder and be included in docs/examples.rst.
 
 Documentation
 =============
