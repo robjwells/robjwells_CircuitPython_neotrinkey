@@ -26,7 +26,7 @@ class PixelProxy:
             self.fill(colour)
             sleep(duration)
             self.clear()
-            sleep(0.1)
+            sleep(duration)
 
 
 class NeoTrinkeyPixels:
@@ -59,7 +59,7 @@ class NeoTrinkeyPixels:
             self.fill(colour)
             sleep(duration)
             self.clear()
-            sleep(0.1)
+            sleep(duration)
         self.restore()
 
     def __getitem__(self, index):
