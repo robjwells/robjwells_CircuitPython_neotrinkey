@@ -3,4 +3,3 @@
 # SPDX-License-Identifier: MIT
 adafruit-blinka
 adafruit-circuitpython-neopixel
-adafruit-circuitpython-touchio
