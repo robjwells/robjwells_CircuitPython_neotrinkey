@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2022 Rob Wells
+#
+# SPDX-License-Identifier: MIT
 from time import sleep
 import board
 

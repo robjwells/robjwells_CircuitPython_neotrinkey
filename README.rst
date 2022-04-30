@@ -1,3 +1,8 @@
+..
+    # SPDX-FileCopyrightText: Copyright (c) 2022 Rob Wells
+    #
+    # SPDX-License-Identifier: MIT
+
 Introduction
 ============
 

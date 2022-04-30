@@ -1,3 +1,8 @@
+<!--
+# SPDX-FileCopyrightText: Copyright (c) 2022 Rob Wells
+#
+# SPDX-License-Identifier: MIT
+-->
 Thanks for opening a pull request!
 Before you submit, please run Pylint and Black on your code.
 Instructions are available here: https://adafru.it/check-your-code

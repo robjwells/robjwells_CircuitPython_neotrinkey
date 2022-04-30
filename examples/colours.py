@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2022 Rob Wells
+#
+# SPDX-License-Identifier: MIT
 blue = 0x0009F6
 teal = 0x009669
 green = 0x06F900
