@@ -7,8 +7,12 @@ pink = 0x8d0072
 orange = 0xe41b00
 red = 0xf90006
 
-pure_red = 0xff0000
-pure_green = 0x00ff00
-pure_blue = 0x0000ff
+full_red = 0xff0000
+full_green = 0x00ff00
+full_blue = 0x0000ff
+
+low_red = 0x100000
+low_green = 0x001000
+low_blue = 0x000010
 
 white = 0xffffff
