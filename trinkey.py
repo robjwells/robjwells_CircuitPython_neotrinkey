@@ -1,4 +1,5 @@
 from time import sleep
+
 from neopixel import NeoPixel
 from touchio import TouchIn
 
@@ -7,6 +8,7 @@ class PixelProxy:
     def __init__(self, pixels, *indices):
         self._pixels = pixels
         assert len(indices) > 0, "PixelProxy must proxy some pixels!"
+        assert all(0 <= idx < pixels.n for idx in indices), "Pixel index out of bounds."
         self._indices = indices
 
     def fill(self, colour):
@@ -30,20 +32,13 @@ class PixelProxy:
 class NeoTrinkeyPixels:
     n_pixels = 4
 
-    # Appease Pylance
-    top: PixelProxy
-    bottom: PixelProxy
-
-    def __init__(self, board, brightness=0.1) -> None:
+    def __init__(self, board, brightness=0.1):
         self._pixels = NeoPixel(board.NEOPIXEL, n=self.n_pixels, brightness=brightness)
         self.left = PixelProxy(self._pixels, 0, 1)
         self.outer = PixelProxy(self._pixels, 1, 2)
         self.right = PixelProxy(self._pixels, 2, 3)
         self.inner = PixelProxy(self._pixels, 0, 3)
-        self._individual = [
-            PixelProxy(self._pixels, n)
-            for n in range(self.n_pixels)
-        ]
+        self._individual = [PixelProxy(self._pixels, n) for n in range(self.n_pixels)]
 
     def save(self):
         self._saved_colours = list(self._pixels)  # type: ignore
@@ -68,7 +63,9 @@ class NeoTrinkeyPixels:
         self.restore()
 
     def __getitem__(self, index):
-        return self._pixels[index]
+        colours = self._pixels[index]
+        # assert len(colours) == 3, "DotStar mode not supported."  # Mostly to appease Pylance.
+        return colours
 
     def __setitem__(self, index, value):
         self._pixels[index] = value
@@ -84,21 +81,34 @@ class NeoTrinkeyPixels:
         self.bottom = bottom
 
 
+# Emulate an enum for the pad press types.
+class PadPress:
+    def __init__(self, value):
+        self.value = value
+
+
+class Press:
+    NONE = PadPress(0b00)
+    TOP = PadPress(0b01)
+    BOTTOM = PadPress(0b10)
+    BOTH = PadPress(0b11)
+
+
 class NeoTrinkeyPads:
     def __init__(self, board) -> None:
         self.left = TouchIn(board.TOUCH2)
         self.right = TouchIn(board.TOUCH1)
 
-    def get_press(self, delay=0.25):
+    def get_press(self, delay=0.25) -> PadPress:
         if self.either_pressed:
             sleep(delay)
             if self.both_pressed:
-                return "BOTH"
+                return Press.BOTH
             elif self.top_pressed:
-                return "TOP"
+                return Press.TOP
             elif self.bottom_pressed:
-                return "BOTTOM"
-        return None
+                return Press.BOTTOM
+        return Press.NONE
 
     @property
     def left_pressed(self):
@@ -147,10 +157,14 @@ class NeoTrinkey:
 
         if left_top:
             self.pads.set_top_and_bottom(top=self.pads.left, bottom=self.pads.right)
-            self.pixels.set_top_and_bottom(top=self.pixels.left, bottom=self.pixels.right)
+            self.pixels.set_top_and_bottom(
+                top=self.pixels.left, bottom=self.pixels.right
+            )
         else:
             self.pads.set_top_and_bottom(top=self.pads.right, bottom=self.pads.left)
-            self.pixels.set_top_and_bottom(top=self.pixels.right, bottom=self.pixels.left)
+            self.pixels.set_top_and_bottom(
+                top=self.pixels.right, bottom=self.pixels.left
+            )
 
         self.pixels.clear()
         self.pixels.top.flash(0x004000)
