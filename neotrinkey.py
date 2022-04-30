@@ -83,15 +83,13 @@ class NeoTrinkeyPixels:
 
 # Emulate an enum for the pad press types.
 class PadPress:
-    def __init__(self, value):
-        self.value = value
+    ...
 
 
 class Press:
-    NONE = PadPress(0b00)
-    TOP = PadPress(0b01)
-    BOTTOM = PadPress(0b10)
-    BOTH = PadPress(0b11)
+    TOP = PadPress()
+    BOTTOM = PadPress()
+    BOTH = PadPress()
 
 
 class NeoTrinkeyPads:
@@ -108,7 +106,7 @@ class NeoTrinkeyPads:
                 return Press.TOP
             elif self.bottom_pressed:
                 return Press.BOTTOM
-        return Press.NONE
+        return None
 
     @property
     def left_pressed(self):
