@@ -6,3 +6,9 @@ yellow = 0x847b00
 pink = 0x8d0072
 orange = 0xe41b00
 red = 0xf90006
+
+pure_red = 0xff0000
+pure_green = 0x00ff00
+pure_blue = 0x0000ff
+
+white = 0xffffff
