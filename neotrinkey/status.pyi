@@ -8,7 +8,7 @@ class SectionUpdate(NamedTuple):
     value: float
 
 class SerialCallback(Protocol):
-    def __call__(self, trinkey: NeoTrinkey, update: list[SectionUpdate]) -> None:
+    def __call__(self, trinkey: NeoTrinkey, *, update: list[SectionUpdate]) -> None:
         """Callback function for serial input.
 
         :param trinkey: the wrapper around the board's neopixels and pads.
@@ -18,7 +18,7 @@ class SerialCallback(Protocol):
         """
 
 class TouchCallback(Protocol):
-    def __call__(self, trinkey: NeoTrinkey, pad: PadPress) -> None:
+    def __call__(self, trinkey: NeoTrinkey, *, pad: PadPress) -> None:
         """Callback function for touch input.
 
         :param trinkey: the wrapper around the board's neopixels and pads.
