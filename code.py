@@ -1,40 +1,49 @@
 from time import sleep
 import board
-from supervisor import runtime
-from rainbowio import colorwheel
 
-from neotrinkey import NeoTrinkey, Press
+from neotrinkey import NeoTrinkey, PadPress, Press
 from colours import *
 
+from neotrinkey_status import SectionUpdate, read_serial_update, StatusMonitor
 
-def start_up(trinkey):
+
+def fill_and_drain(
+    trinkey: NeoTrinkey, colour: int = low_red, delay: float = 0.25
+) -> None:
     for p in trinkey.pixels:
-        p.fill(0x100000)
-        sleep(0.25)
+        p.set(colour)
+        sleep(delay)
     for p in reversed(trinkey.pixels):
         p.clear()
-        sleep(0.25)
+        sleep(delay)
+
+
+def chase(trinkey: NeoTrinkey, colour: int = low_red, delay: float = 0.25) -> None:
+    for active in trinkey.pixels:
+        trinkey.pixels.clear()
+        active.set(colour)
+        sleep(delay)
 
 
 trinkey = NeoTrinkey(board)
-start_up(trinkey)
-all_on = False
+fill_and_drain(trinkey)
 
-trinkey.pixels.fill(0xFF0000)
+trinkey.pixels.top.fill(low_blue)
+trinkey.pixels.bottom.fill(low_green)
 
-while True:
-    if runtime.serial_bytes_available:
-        command = input()
-        ps, cs = command.split(";")
-        pixels_to_set = [int(x) for x in ps.split(",")]
-        colour = int(cs, 16)
-        for p in pixels_to_set:
-            trinkey.pixels[p] = colour
 
-    pressed = trinkey.pads.get_press()
-    if pressed == "TOP":
+def serial(trinkey: NeoTrinkey, update: list[SectionUpdate]) -> None:
+    trinkey.pixels.flash(pink)
+
+
+def touch(trinkey: NeoTrinkey, pad: PadPress) -> None:
+    if pad is Press.BOTTOM:
         trinkey.pixels.flash(green)
-    elif pressed == "BOTTOM":
+    elif pad is Press.TOP:
         trinkey.pixels.flash(blue)
-    elif pressed == "BOTH":
-        trinkey.pixels.flash(0xffffff)
+    elif pad is Press.BOTH:
+        trinkey.pixels.flash(white)
+
+
+monitor = StatusMonitor(trinkey, serial, touch)
+monitor.run()
