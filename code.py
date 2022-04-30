@@ -3,7 +3,7 @@ import board
 from supervisor import runtime
 from rainbowio import colorwheel
 
-from trinkey import NeoTrinkey
+from neotrinkey import NeoTrinkey, Press
 from colours import *
 
 
