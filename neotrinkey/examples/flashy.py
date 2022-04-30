@@ -8,20 +8,12 @@ import colours
 def fill_and_drain(
     trinkey: NeoTrinkey, colour: int = colours.low_red, delay: float = 0.25
 ) -> None:
+    """Set the pixels clockwise from 0 to red, then clear one by one back to 0."""
     for p in trinkey.pixels:
         p.set(colour)
         sleep(delay)
     for p in reversed(trinkey.pixels):
         p.clear()
-        sleep(delay)
-
-
-def chase(
-    trinkey: NeoTrinkey, colour: int = colours.low_red, delay: float = 0.25
-) -> None:
-    for active in trinkey.pixels:
-        trinkey.pixels.clear()
-        active.set(colour)
         sleep(delay)
 
 
@@ -33,12 +25,14 @@ trinkey.pixels.bottom.fill(colours.low_green)
 
 
 def serial(trinkey: NeoTrinkey, update: list[SectionUpdate]) -> None:
+    """Flash a different colour for each update part received over serial."""
     cs = [colours.pink, colours.yellow, colours.teal, colours.purple]
     for c in cs[: len(update)]:
         trinkey.pixels.flash(c)
 
 
 def touch(trinkey: NeoTrinkey, pad: PadPress) -> None:
+    """Flash a different colour depending on which pad is pressed."""
     if pad is Press.BOTTOM:
         trinkey.pixels.flash(colours.green)
     elif pad is Press.TOP:
