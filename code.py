@@ -33,7 +33,9 @@ trinkey.pixels.bottom.fill(low_green)
 
 
 def serial(trinkey: NeoTrinkey, update: list[SectionUpdate]) -> None:
-    trinkey.pixels.flash(pink)
+    colours = [pink, yellow, teal, purple]
+    for colour in colours[: len(update)]:
+        trinkey.pixels.flash(colour)
 
 
 def touch(trinkey: NeoTrinkey, pad: PadPress) -> None:
