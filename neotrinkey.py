@@ -93,11 +93,11 @@ class Press:
 
 
 class NeoTrinkeyPads:
-    def __init__(self, board) -> None:
+    def __init__(self, board):
         self.left = TouchIn(board.TOUCH2)
         self.right = TouchIn(board.TOUCH1)
 
-    def get_press(self, delay=0.25) -> PadPress:
+    def get_press(self, delay=0.25):
         if self.either_pressed:
             sleep(delay)
             if self.both_pressed:
