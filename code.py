@@ -1,10 +1,8 @@
 from time import sleep
 import board
 
-from neotrinkey.neotrinkey import NeoTrinkey, PadPress, Press
+from neotrinkey import NeoTrinkey, PadPress, Press, SectionUpdate, StatusMonitor
 import colours
-
-from neotrinkey.neotrinkey_status import SectionUpdate, StatusMonitor
 
 
 def fill_and_drain(

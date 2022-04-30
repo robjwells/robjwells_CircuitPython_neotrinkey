@@ -144,7 +144,11 @@ class NeoTrinkey:
         self._set_top_and_bottom()
 
     def _set_top_and_bottom(self):
-        self.pixels.outer.fill(0xFFFFFF)
+        green = 0x004000
+        blue = 0x000040
+        white = 0x404040
+
+        self.pixels.outer.fill(white)
         while True:
             if self.pads.left_pressed:
                 left_top = True
@@ -165,5 +169,5 @@ class NeoTrinkey:
             )
 
         self.pixels.clear()
-        self.pixels.top.flash(0x004000)
-        self.pixels.bottom.flash(0x000040)
+        self.pixels.top.flash(green)
+        self.pixels.bottom.flash(blue)

@@ -1,5 +1,5 @@
 from typing import NamedTuple, NoReturn, Protocol
-from neotrinkey.neotrinkey import NeoTrinkey, PadPress
+from ._neotrinkey import NeoTrinkey, PadPress
 
 class SectionUpdate(NamedTuple):
     name: str
