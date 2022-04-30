@@ -64,7 +64,6 @@ class NeoTrinkeyPixels:
 
     def __getitem__(self, index):
         colours = self._pixels[index]
-        # assert len(colours) == 3, "DotStar mode not supported."  # Mostly to appease Pylance.
         return colours
 
     def __setitem__(self, index, value):
