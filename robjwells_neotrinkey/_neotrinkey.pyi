@@ -1,17 +1,18 @@
 # SPDX-FileCopyrightText: Copyright (c) 2022 Rob Wells
 #
 # SPDX-License-Identifier: MIT
-from typing import Any, Iterator, Protocol
+from typing import Iterator, Protocol
 
+from microcontroller import Pin
 from neopixel import NeoPixel
 from touchio import TouchIn
 
 class Board(Protocol):
     """Typing stub for NeoTrinkey CircuitPython board module."""
 
-    NEOPIXEL: int
-    TOUCH1: int
-    TOUCH2: int
+    NEOPIXEL: Pin
+    TOUCH1: Pin
+    TOUCH2: Pin
 
 class PixelProxy:
     """Group an arbitrary set of neopixels to be treated as one."""
