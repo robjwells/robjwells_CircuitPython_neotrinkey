@@ -17,7 +17,6 @@ def flash_green(trinkey: NeoTrinkey, update=None, pad=None):
 
 
 trinkey = NeoTrinkey(board)
-
 monitor = StatusMonitor(trinkey, flash_blue, flash_green)
 
 gc.collect()
