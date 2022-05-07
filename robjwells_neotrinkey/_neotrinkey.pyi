@@ -1,10 +1,17 @@
 # SPDX-FileCopyrightText: Copyright (c) 2022 Rob Wells
 #
 # SPDX-License-Identifier: MIT
-from typing import Any, Iterator
+from typing import Any, Iterator, Protocol
 
 from neopixel import NeoPixel
 from touchio import TouchIn
+
+class Board(Protocol):
+    """Typing stub for NeoTrinkey CircuitPython board module."""
+
+    NEOPIXEL: int
+    TOUCH1: int
+    TOUCH2: int
 
 class PixelProxy:
     """Group an arbitrary set of neopixels to be treated as one."""
@@ -69,7 +76,7 @@ class NeoTrinkeyPixels:
     the side of a laptop.
     """
 
-    def __init__(self, board: Any, brightness: float = ...) -> None:
+    def __init__(self, board: Board, brightness: float = ...) -> None:
         """Set up the four neopixels on the board.
 
         :param board: the CircuitPython `board` module allowing pin access.
@@ -139,7 +146,7 @@ class NeoTrinkeyPads:
     bottom: TouchIn
     """The bottom pad relative to the user when the device is inserted horizontally."""
 
-    def __init__(self, board: Any) -> None:
+    def __init__(self, board: Board) -> None:
         """Set up the touch pads.
 
         :param board: The `board` CircuitPython module, allowing pin access.
@@ -171,7 +178,7 @@ class NeoTrinkey:
     pixels: NeoTrinkeyPixels
     pads: NeoTrinkeyPads
 
-    def __init__(self, board: Any, brightness: float = ...) -> None:
+    def __init__(self, board: Board, brightness: float = ...) -> None:
         """Set up the board with a given brightness and set the top & bottom pads and pixels.
 
         :param board: The `board` CircuitPython module, allowing pin access.
