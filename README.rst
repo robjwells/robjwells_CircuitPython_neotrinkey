@@ -6,53 +6,51 @@
 Introduction
 ============
 
-
 .. image:: https://readthedocs.org/projects/robjwells-circuitpython-neotrinkey/badge/?version=latest
     :target: https://circuitpython-neotrinkey.readthedocs.io/
     :alt: Documentation Status
-
-
 
 .. image:: https://img.shields.io/discord/327254708534116352.svg
     :target: https://adafru.it/discord
     :alt: Discord
 
-
 .. image:: https://github.com/robjwells/robjwells_CircuitPython_neotrinkey/workflows/Build%20CI/badge.svg
     :target: https://github.com/robjwells/robjwells_CircuitPython_neotrinkey/actions
     :alt: Build Status
-
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
     :alt: Code Style: Black
 
-This library wraps the Neo Trinkey to make using the neopixels and pads very easy,
-as well as including a class (optional!) that makes using the Neo Trinkey as a
-status display a doddle.
+This library wraps the Adafruit `Neo Trinkey`_ (or NeoPixel Trinkey),
+providing helpers for using the NeoPixels and touch pads. It also
+includes a class to make using the Neo Trinkey as a status monitor for a
+host computer very easy, through the use of callback functions for touch
+and serial inputs.
+
+.. _Neo Trinkey: https://www.adafruit.com/product/4870
 
 Dependencies
 =============
 
-This library depends on:
+This library only depends on `CircuitPython`_.
+The build for the Neo Trinkey includes all needed dependencies.
 
-* `Adafruit CircuitPython <https://github.com/adafruit/circuitpython>`_
-
-Just install the latest version of CircuitPython onto your board, and then
-include the neotrinkey folder in the lib folder on board.
+.. _CircuitPython: https://circuitpython.org/board/neopixel_trinkey_m0/
 
 Usage Example
 =============
 
-.. Add a quick, simple example. It and other examples should live in the
-    examples folder and be included in docs/examples.rst.
+Here’s a bare-bones example that flashes all the LEDs blue when a serial
+message is received, and green when either of the touch pads are pressed.
+
+.. literalinclude:: ../examples/neotrinkey_simpletest.py
 
 Documentation
 =============
-API documentation for this library can be found on `Read the Docs <https://robjwells-circuitpython-neotrinkey.readthedocs.io/>`_.
 
-For information on building library documentation, please check out
-`this guide <https://learn.adafruit.com/creating-and-sharing-a-circuitpython-library/sharing-our-docs-on-readthedocs#sphinx-5-1>`_.
+API documentation for this library can be found on `Read the Docs
+<https://robjwells-circuitpython-neotrinkey.readthedocs.io/>`_.
 
 Contributing
 ============
